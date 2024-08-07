@@ -5,7 +5,7 @@ from langchain_core.utils.function_calling import convert_to_openai_tool
 from langchain_core.tools import tool
 
 client = OpenAI(
-    api_key=os.environ["MOONSHOT_API_KEY"],  # 在这里将 MOONSHOT_API_KEY 替换为你从 Kimi 开放平台申请的 API Key
+    api_key=os.environ["MOONSHOT_API_KEY"],
     base_url="https://api.moonshot.cn/v1",
 )
 

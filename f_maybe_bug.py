@@ -1,11 +1,10 @@
-
+"""
+这部分代码是在LangChain中使用MoonShot Tool Call特性遇到的异常记录。
+    经过咨询客服，异常原因为：token数量超过了所调用版本的LLM最大token数限制（不敢相信，简单的算术运算问题会触发该上限）
+    经过实际测试：MoonShot 8k的模型即使设置为最大值8192也会异常，32k模型设置20000返回正常，"贵还是贵的道理的"，正常代码见f_Function_Calling_in_LangChain_2.py
+"""
 import os
-from langchain.output_parsers.openai_tools import PydanticToolsParser
 from langchain_core.utils.function_calling import convert_to_openai_tool
-from langchain_core.prompts import ChatPromptTemplate
-from langchain_community.chat_models.moonshot import MoonshotChat
-from langchain_core.pydantic_v1 import BaseModel, Field
-from typing import Optional
 from langchain_core.tools import tool
 from langchain_openai import ChatOpenAI
 from langchain_core.messages import HumanMessage, ToolMessage, SystemMessage

@@ -63,7 +63,7 @@ messages = [
 def test_case_01():
     """测试bind_tools()传入原始数据类型，message为简单query str的场景"""
 
-    """按照MoonShot客服说的在实例化model时设置max token值，8k的模型即使设置为最大值8192也会异常，测试发现32k模型设置20000返回正常"""
+    """按照MoonShot客服说的在实例化model时设置max token值，8k的模型即使设置为最大值8192也会异常(异常返回详见文件末尾注释)，测试发现32k模型设置20000返回正常"""
 
     """by 客服：
         您好，每个模型都有最大的长度限制，8k模型的最大长度是8192token，然后32k模型的最大长度是32768token，128k模型的最大长度是131072token呢~
@@ -72,44 +72,48 @@ def test_case_01():
 
     llm_with_tools_original = llm.bind_tools(tools=tools_original)
     print("Tool struct before bind: ", tools_original)
-    # success_count = 0
-    # for i in range(0, 10):
-    # sleep(5)
     ai_msg_original = llm_with_tools_original.invoke(query)
     if len(ai_msg_original.tool_calls) != 0:
         # success_count = success_count + 1
         print(f"success, ", ai_msg_original)
-
-    # print(success_count)
-    exit(1)
+    return llm_with_tools_original, ai_msg_original
 
 
 def test_case_02():
     """测试bind_tools()传入原始数据类型，message为messages对象的场景"""
 
+    """按照MoonShot客服说的在实例化model时设置max token值，8k的模型即使设置为最大值8192也会异常(异常返回详见文件末尾注释)，测试发现32k模型设置20000返回正常"""
+
     llm_with_tools_original = llm.bind_tools(tools=tools_original)
     print("Tool struct before bind: ", tools_original)
-    # success_count = 0
-    # for i in range(0, 10):
-    # sleep(5)
     ai_msg_original = llm_with_tools_original.invoke(messages)
     if len(ai_msg_original.tool_calls) != 0:
         # success_count = success_count + 1
         print(f"success, ", ai_msg_original)
+    return llm_with_tools_original, ai_msg_original
 
-    # print(success_count)
-    exit(1)
+
+def test_case_03():
+    """连接test_caes_02()完成tool call，并输出最终答案"""
+    llm_with_tools, ai_msg = test_case_02()
+    # append ai_msg处有提示类型Warning，但此处代码为参考LangChain官方示例代码:https://python.langchain.com/v0.2/docs/how_to/function_calling 中‘Passing tool outputs to model’部分
+    messages.append(ai_msg)
+    for tool_call in ai_msg.tool_calls:
+        selected_tool = {"add": add, "multiply": multiply}[tool_call["name"].lower()]
+        tool_output = selected_tool.invoke(tool_call["args"])
+        messages.append(ToolMessage(tool_output, tool_call_id=tool_call["id"]))
+    result = llm_with_tools.invoke(messages)
+
+    print(result)
+    print(result.content)
+    return result
 
 
 if __name__ == "__main__":
-    test_case_02()
+    test_case_03()
+    exit(1)
 
-# messages.append(ai_msg)
-# for tool_call in ai_msg.tool_calls:
-#     selected_tool = {"add": add, "multiply": multiply}[tool_call["name"].lower()]
-#     tool_output = selected_tool.invoke(tool_call["args"])
-#     messages.append(ToolMessage(tool_output, tool_call_id=tool_call["id"]))
-# result = llm_with_tools.invoke(messages)
-#
-# print(result)
-# print(result.content)
+"""
+openai.BadRequestError: Error code: 400 - {'error': {'message': 'Invalid request: 
+Your request exceeded model token limit: 8192', 'type': 'invalid_request_error'}}
+"""
