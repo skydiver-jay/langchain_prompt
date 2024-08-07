@@ -38,8 +38,11 @@ tools = [add, multiply]
 
 # Convert Pydantic objects to the appropriate schema:
 # 这一步很关键，如果不进行转换，按照LangChain官方文档直接bind_tools()，会不成功
+# 更新@20240807，后续观察表明这里参考书中示例代码进行转换是多余的，参考官方文档直接bind_tool()是OK的：
+#   1. LangChain提供的bind_tools()方法实现用第一行代码就是 `formatted_tools = [convert_to_openai_tool(tool) for tool in tools]`
+#   2. 使用MoonShot Tool Call特性异常不成功最终证明不是该原因导致，而是max token配置设置问题
 tools_original = tools
-tools = [convert_to_openai_tool(p) for p in tools]
+tools = [convert_to_openai_tool(p) for p in tools]  # 就是这一步是多余的
 # print(tools)
 
 llm = ChatOpenAI(
