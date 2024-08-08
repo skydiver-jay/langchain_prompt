@@ -1,9 +1,10 @@
 import os
 from langchain_community.chat_models.moonshot import MoonshotChat
 from langchain_core.messages import HumanMessage, SystemMessage
+from langchain_openai import ChatOpenAI
 
 # Generate your api key from: https://platform.moonshot.cn/console/api-keys
-# os.environ["MOONSHOT_API_KEY"] = "MOONSHOT_API_KEY"
+# 设置环境变量os.environ["MOONSHOT_API_KEY"] = "MOONSHOT_API_KEY"
 
 chat = MoonshotChat()
 # or use a specific model
@@ -21,6 +22,18 @@ messages = [
                 "You are a helpful assistant that translates English to Chinese."
     ),
 ]
+
+print(chat.invoke(messages))
+
+
+# 另一种在LangChain中使用MoonShot的方式
+#     为了更好地兼容OpenAI生态，使用如下方式更佳，案例参考f_Function_Calling_in_LangChain_2.py，
+#     由于，MoonshotChat暂未实现bind_tools()接口，使用第一种方式则无法方便地使用tool call特性
+chat = ChatOpenAI(
+    base_url="https://api.moonshot.cn/v1",
+    api_key=os.environ["MOONSHOT_API_KEY"],
+    model="moonshot-v1-8k",
+)
 
 print(chat.invoke(messages))
 
