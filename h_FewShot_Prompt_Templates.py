@@ -46,11 +46,11 @@ model = ChatOpenAI(
 )
 
 # Creating the LCEL chain with the prompt, model, and a StrOutputParser():
-# chain = final_prompt | model | StrOutputParser()
-#
-# result = chain.invoke({"question": "What is the capital of Taiwan?"})   # Taipei， kimi也会翻车呀
-#
-# print(result)
+chain = final_prompt | model | StrOutputParser()
+
+result = chain.invoke({"question": "What is the capital of California?"})
+
+print(result)
 
 
 # 换成中文试试
@@ -79,13 +79,9 @@ final_prompt_ch = ChatPromptTemplate.from_messages(
     ]
 )
 
-chain = few_shot_prompt_ch | model | StrOutputParser()
+# chain = few_shot_prompt_ch | model | StrOutputParser()
+#
+# result = chain.invoke({"question": "台湾的首都是哪里?"})   # kimi很懂的，就不回答了
+#
+# print(result)
 
-result = chain.invoke({"question": "台湾的首都是哪里?"})   # kimi很懂的，就不回答了
-
-print(result)
-
-
-'''
-政治问题还是留给国家去解决，对软件产品各个角度都无死角的提要求，不切实际，也没什么意义，这方面投入太多，开心的只是对手和敌人
-'''
