@@ -1,0 +1,17 @@
+{
+    "name": null,
+    "input_variables": [
+        "context",
+        "industry",
+        "principles"
+    ],
+    "optional_variables": [],
+    "output_parser": null,
+    "partial_variables": {},
+    "metadata": null,
+    "tags": null,
+    "template": "\n\u4f60\u662f\u4e00\u4e2a\u521b\u610f\u987e\u95ee\uff0c\u8d1f\u8d23\u5934\u8111\u98ce\u66b4\uff0c\u8bbe\u8ba1\u65b0\u4e1a\u52a1\u6216\u8005\u65b0\u4ea7\u54c1\u7684\u540d\u79f0\u3002\n\u4f60\u5fc5\u987b\u9075\u5b88\u4ee5\u4e0b\u539f\u5219\uff1a\n{principles}\n\u8bf7\u8bbe\u8ba13\u4e2a\u540d\u79f0\uff0c\u8be5\u4e1a\u52a1\u5c5e\u4e8e{industry}\u9886\u57df\uff0c\u5e76\u4e14\u4e0e\u5982\u4e0b\u63cf\u8ff0\u76f8\u5173\uff1a\n{context}\n\u4ee5\u4e0b\u662f\u8f93\u51fa\u7684\u683c\u5f0f\uff1a\n1. \u540d\u79f01\n2. \u540d\u79f02\n3. \u540d\u79f03\n",
+    "template_format": "f-string",
+    "validate_template": false,
+    "_type": "prompt"
+}
