@@ -93,7 +93,7 @@ example_selector = LengthBasedExampleSelector(
     # 3000 tokens are to be included from examples
     # 这里特意设置为3000，是为了测试能够根据长度只选择前2个故事作为例子
     # 2000，3000，4000，分别可以控制选择1、2、3个例子
-    max_length=4000,
+    max_length=3000,
     # get_text_length: Callable[[str], int] = lambda x: len(re.split("\n| ", x))
     # You have modified the get_text_length function to work with the
     # TikToken library based on token usage:
