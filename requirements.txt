@@ -1,5 +1,6 @@
-langchain
+langchain~=0.2.11
 langchain_community
 langchain_core
-openai
-pydantic
+openai~=1.37.1
+pydantic~=2.8.2
+tiktoken~=0.7.0
