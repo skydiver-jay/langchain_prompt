@@ -4,3 +4,4 @@ langchain_core
 openai~=1.37.1
 pydantic~=2.8.2
 tiktoken~=0.7.0
+langchain-text-splitters

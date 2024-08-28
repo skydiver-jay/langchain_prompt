@@ -30,7 +30,7 @@ template = '''
 '''
 
 system_prompt = SystemMessagePromptTemplate.from_template(template)
-# chat_prompt.save("resources/ch_prompt.json")   # NotImplementedError
+# system_prompt.save("resources/ch_prompt.json")   # NotImplementedError
 
 """
 Warning:
